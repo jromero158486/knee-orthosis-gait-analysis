@@ -3,7 +3,7 @@
 Computer vision and gait analysis for an adjustable knee orthosis.
 
 <p align="center">
-  <img src="docs/images/cad_final.png" width="60%" alt="Knee orthosis CAD"/>
+  <img src="images/cad_final.png" width="60%" alt="Knee orthosis CAD"/>
 </p>
 
 ## Tech stack
