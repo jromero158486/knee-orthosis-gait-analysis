@@ -14,13 +14,15 @@ Computer vision and gait analysis for an adjustable knee orthosis.
 
 The pipeline tracks hip, knee, and ankle landmarks from gait videos and extracts:
 
-- left and right knee angles
-- midline deviation
+- left and right knee angles (degrees)
+- midline deviation (pixels)
 - frame-by-frame gait measurements
 
 Results are saved as CSV files and plots for recordings with and without the orthosis.
 
 ## Run
+
+Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -34,7 +36,7 @@ data/videos/
 └── without_orthosis.mp4
 ```
 
-Extract metrics:
+Extract gait metrics:
 
 ```bash
 python -m src.extract_gait_metrics
@@ -46,7 +48,7 @@ Generate plots:
 python -m src.analyze_results
 ```
 
-Annotate a video:
+Annotate a video with knee landmarks and angles:
 
 ```bash
 python -m src.annotate_video data/videos/with_orthosis.mp4 annotated.mp4
@@ -56,6 +58,7 @@ python -m src.annotate_video data/videos/with_orthosis.mp4 annotated.mp4
 
 ```text
 cad/
+images/
 results/
 src/
 ```
