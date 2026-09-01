@@ -1,59 +1,119 @@
-# Análisis de Marcha con Órtesis usando Landmarks y Simulación CAD
+# Knee Orthosis Gait Analysis
 
-Este repositorio contiene el análisis cuantitativo de la marcha con y sin órtesis mediante visión por computadora (MediaPipe) y el análisis estructural del diseño de una órtesis de rodilla modelada en Fusion 360.
+Computer vision and gait analysis for an adjustable knee orthosis using MediaPipe Pose.
 
-## Descripción del Análisis de Marcha
+The project combines a 3D-printed knee orthosis with video-based gait measurements to compare movement with and without the device.
 
-Se procesaron videos de sujetos caminando con y sin órtesis para extraer métricas biomecánicas usando **MediaPipe Pose**.
+<p align="center">
+  <img src="docs/images/cad_final.png" width="47%" alt="Knee orthosis CAD"/>
+  &nbsp;
+  <img src="docs/images/prototype.png" width="47%" alt="Physical knee orthosis prototype"/>
+</p>
 
-### Métricas extraídas:
-- **Ángulo de rodilla izquierda y derecha** (flexión/extensión)
-- **Desviación de la línea media corporal** (alineación postural)
-- [En desarrollo: Ancho de paso y cadencia]
+## Tech stack
 
-### 🛠 Herramientas:
-- Python + OpenCV + MediaPipe
-- Matplotlib y SciPy para visualizaciones y análisis estadístico
+`Python` · `OpenCV` · `MediaPipe Pose` · `NumPy` · `pandas` · `Matplotlib` · `Fusion 360`
 
----
+## What it does
 
-## 🧪 Resultados
+The gait-analysis pipeline tracks the hip, knee, and ankle landmarks in each video frame and extracts:
 
-Se generaron visualizaciones automáticas:
-- Diagramas de caja (boxplots) para comparar condiciones
-- Series temporales
-- Estadísticas de media y desviación estándar
-- Pruebas t pareadas para análisis de significancia
+- left and right knee angles
+- midline deviation
+- frame-by-frame gait measurements
 
-Todos los resultados están en `data/outputs/`.
----
+The measurements are saved as CSV files and used to generate boxplots and time-series plots for the two recording conditions.
 
-## 🧱 Análisis Estructural de la Órtesis
+## Gait analysis
 
-Se utilizó **Autodesk Fusion 360** para:
-- Modelar la órtesis en PLA
-- Asignar restricciones y cargas realistas (peso parcial, contacto corporal)
-- Simular el esfuerzo estático y factor de seguridad
+MediaPipe Pose is used for landmark detection, while OpenCV handles the video pipeline.
 
-## Instrucciones de uso
+<p align="center">
+  <img src="docs/images/gait_landmarks.png" width="65%" alt="Gait landmark analysis"/>
+</p>
 
-1. Instalar dependencias:
+The comparison is frame-based and was used as a small biomechanical analysis of the prototype rather than a clinical validation.
+
+## Orthosis
+
+The adjustable knee orthosis was modeled in Fusion 360 and fabricated as part of a rehabilitation engineering project.
+
+The CAD model is available in:
+
+```text
+cad/knee_orthosis.f3d
+````
+
+## Results
+
+Example outputs are stored in `results/figures/`.
+
+| Knee angle                                                  | Midline deviation                                               |
+| ----------------------------------------------------------- | --------------------------------------------------------------- |
+| ![Left knee angle](results/figures/box_knee_angle_left.png) | ![Midline deviation](results/figures/box_midline_deviation.png) |
+
+The extracted measurements are stored in:
+
+```text
+results/metrics/
+├── gait_metrics.csv
+└── summary_stats.csv
+```
+
+## Repository structure
+
+```text
+cad/
+└── knee_orthosis.f3d
+
+data/
+└── videos/              # local videos (not included)
+
+docs/
+└── images/
+
+results/
+├── figures/
+└── metrics/
+
+src/
+├── annotate_video.py
+├── analyze_results.py
+├── extract_gait_metrics.py
+├── pose_utils.py
+└── __init__.py
+```
+
+## Run
+
+Install the dependencies:
+
 ```bash
 pip install -r requirements.txt
+```
 
-- Colocar tus videos en data/videos/ con los nombres:
+Place the two videos in:
 
-sin_ortesis.mp4
-con_ortesis.mp4
+```text
+data/videos/
+├── with_orthosis.mp4
+└── without_orthosis.mp4
+```
 
-- Visualizar puntos y ángulos
+Extract gait metrics:
 
-python src/view_landmarks.py
+```bash
+python -m src.extract_gait_metrics
+```
 
-- Extraer métricas de marcha:
+Generate the plots:
 
-python src/analyze_gait.py
+```bash
+python -m src.analyze_results
+```
 
-- Analizar y visualizar resultados:
+Annotate a video with knee landmarks and angles:
 
-python src/analyze_results.py
+```bash
+python -m src.annotate_video data/videos/with_orthosis.mp4 annotated.mp4
+```
