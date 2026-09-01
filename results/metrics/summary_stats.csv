@@ -1,0 +1,3 @@
+condition,knee_angle_left_mean,knee_angle_left_std,knee_angle_right_mean,knee_angle_right_std,midline_deviation_mean,midline_deviation_std
+with_orthosis,153.905,26.001,159.922,32.581,56.78,39.567
+without_orthosis,165.288,12.871,164.164,13.837,58.823,37.214

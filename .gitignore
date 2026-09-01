@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+data/videos/
+*.mp4
+
+.DS_Store
